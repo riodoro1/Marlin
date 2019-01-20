@@ -6228,6 +6228,8 @@ inline void gcode_M17() {
       }
     #endif
 
+    lcd_setstatusPGM(PSTR(MSG_VERTEX_PRINTING), -1);
+
     move_away_flag = false;
   }
 #endif // ADVANCED_PAUSE_FEATURE
