@@ -7194,6 +7194,11 @@ inline void gcode_M105() {
     uint16_t s = parser.ushortval('S', 255);
     NOMORE(s, 255);
     const uint8_t p = parser.byteval('P', 0);
+    //Vertex Delta offset
+    if ((s <= 4)&&(s > 0)){
+      s = 5;
+    }
+    //Vertex Delta offset
     if (p < FAN_COUNT) fanSpeeds[p] = s;
   }
 
@@ -9858,7 +9863,7 @@ inline void gcode_M907() {
     uint8_t case_light_bright = (uint8_t)case_light_brightness;
     if (case_light_on) {
       if (USEABLE_HARDWARE_PWM(CASE_LIGHT_PIN)) {
-        analogWrite(CASE_LIGHT_PIN, INVERT_CASE_LIGHT ? 255 - case_light_brightness : case_light_brightness );
+        analogWrite(CASE_LIGHT_PIN, INVERT_CASE_LIGHT ? 255 - case_light_brightness : map(case_light_brightness, 0, 100, 0, 255) );
       }
       else digitalWrite(CASE_LIGHT_PIN, INVERT_CASE_LIGHT ? LOW : HIGH );
     }
@@ -9881,7 +9886,11 @@ inline void gcode_M907() {
 inline void gcode_M355() {
   #if HAS_CASE_LIGHT
     uint8_t args = 0;
-    if (parser.seenval('P')) ++args, case_light_brightness = parser.value_byte();
+    //if (parser.seenval('P')) ++args, case_light_brightness = parser.value_byte();
+    if (parser.seenval('P')) { 
+      ++args; 
+      case_light_brightness = map(parser.value_byte(), 0, 255, 0, 100);
+    }
     if (parser.seenval('S')) ++args, case_light_on = parser.value_bool();
     if (args) update_case_light();
 
@@ -13069,13 +13078,11 @@ void setup() {
 
   #if ENABLED(SHOW_BOOTSCREEN)
     #if ENABLED(DOGLCD)                           // On DOGM the first bootscreen is already drawn
-      #if ENABLED(SHOW_CUSTOM_BOOTSCREEN)
-        safe_delay(CUSTOM_BOOTSCREEN_TIMEOUT);    // Custom boot screen pause
-        lcd_bootscreen();                         // Show Marlin boot screen
-      #endif
-      safe_delay(BOOTSCREEN_TIMEOUT);             // Pause
+
+        safe_delay(200);    // Custom boot screen pause
+
     #elif ENABLED(ULTRA_LCD)
-      lcd_bootscreen();
+
       #if DISABLED(SDSUPPORT)
         lcd_init();
       #endif
