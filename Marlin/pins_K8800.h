@@ -82,6 +82,9 @@
 #define DOGLCD_CS           29
 #define DOGLCD_A0           27
 
+#define TEMP_BED_PIN         8 //PK0
+#define HEATER_BED_PIN      31 //PC6
+
 #if ENABLED(ULTRA_LCD)
 
     #define BEEPER_PIN        6
