@@ -70,6 +70,7 @@
 // Temperature Sensors
 //
 #define TEMP_0_PIN                            13
+#define TEMP_BED_PIN                           8  //PK0
 
 //
 // Heaters / Fans
@@ -77,6 +78,7 @@
 #define HEATER_0_PIN                          10
 #define FAN_PIN                                8
 #define CONTROLLER_FAN_PIN                     9
+#define HEATER_BED_PIN                        31  //PC6
 
 //
 // Misc. Functions
