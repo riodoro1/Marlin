@@ -42,7 +42,7 @@
 #define Z_STOP_PIN                            66
 
 #ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN                     68
+  #define Z_MIN_PROBE_PIN                     64  // PK2
 #endif
 
 #define FIL_RUNOUT_PIN                        69  // PK7
@@ -85,6 +85,7 @@
 //
 #define KILL_PIN                              20  // PD1
 #define CASE_LIGHT_PIN                         7
+#define SERVO0_PIN                            30  // PC7
 
 //
 // SD Card
